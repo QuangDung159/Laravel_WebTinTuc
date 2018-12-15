@@ -36,15 +36,15 @@ Route::group(["prefix" => "admin"], function () {
         Route::post("them", "LoaiTinController@makeAdd");
         Route::get("xoa/{id}", "LoaiTinController@makeDelete");
     });
-    Route::group(["prefix" => "user"], function () {
-        Route::get("danhsach", "TheLoaiController@get");
-        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
-        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
-        Route::get("them", "TheLoaiController@showAddPage");
-        Route::post("them", "TheLoaiController@makeAdd");
-        Route::get("xoa/{id}", "TheLoaiController@makeDelete");
-    });
     Route::group(["prefix" => "tintuc"], function () {
+        Route::get("danhsach", "TinTucController@get");
+        Route::get("sua/{id}", "TinTucController@showUpdatePage");
+        Route::post("sua/{id}", "TinTucController@makeUpdate");
+        Route::get("them", "TinTucController@showAddPage");
+        Route::post("them", "TinTucController@makeAdd");
+        Route::get("xoa/{id}", "TinTucController@makeDelete");
+    });
+    Route::group(["prefix" => "user"], function () {
         Route::get("danhsach", "TheLoaiController@get");
         Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
         Route::post("sua/{id}", "TheLoaiController@makeUpdate");
