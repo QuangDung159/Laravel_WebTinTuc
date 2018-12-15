@@ -12,7 +12,8 @@
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-7" style="padding-bottom:120px">
                     @if(count($errors) > 0)
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger alert-dismissable">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             @foreach($errors->all() as $item)
                                 {{$item}}<br>
                             @endforeach
@@ -29,7 +30,7 @@
                         {{csrf_field()}}
                         <div class="form-group">
                             <label>Category Parent</label>
-                            <select class="form-control">
+                            <select class="form-control" name="id_the_loai">
                                 @foreach($list_the_loai as $item)
                                     <option value="{{$item->id}}">{{$item->Ten}}</option>
                                 @endforeach
@@ -42,7 +43,7 @@
                         </div>
                         <button type="submit" class="btn btn-default">Xác Nhận</button>
                         <button type="reset" class="btn btn-default">Nhập Lại</button>
-                        <form>
+                    </form>
                 </div>
             </div>
             <!-- /.row -->

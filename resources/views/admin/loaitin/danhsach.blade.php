@@ -4,9 +4,15 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
+                @if(session("thongbao"))
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{session("thongbao")}}
+                    </div>
+                @endif
                 <div class="col-lg-12">
-                    <h1 class="page-header">Category
-                        <small>List</small>
+                    <h1 class="page-header">Loại Tin
+                        <small>Danh Sách</small>
                     </h1>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -29,10 +35,10 @@
                             <td>{{$item->TenKhongDau}}</td>
                             <td>{{$item->theloai->Ten}}</td>
                             <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a
-                                        href="admin/loaitin/xoa/{id}">
+                                        href="admin/loaitin/xoa/{{$item->id}}">
                                     Delete</a></td>
                             <td class="center"><i class="fa fa-pencil fa-fw"></i> <a
-                                        href="admin/loatin/sua/{id}">Edit</a></td>
+                                        href="admin/loaitin/sua/{{$item->id}}">Edit</a></td>
                         </tr>
                     @endforeach
                     </tbody>

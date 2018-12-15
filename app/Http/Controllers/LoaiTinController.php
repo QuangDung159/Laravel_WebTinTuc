@@ -17,13 +17,18 @@ class LoaiTinController extends Controller
 
     public function showUpdatePage($id)
     {
+        $list_the_loai = THELOAI::all();
         if ($id != null || $id != "") {
             $loai_tin = LOAITIN::find($id);
-            return view("admin.loaitin.sua", ["loai_tin" => $loai_tin]);
+            return view("admin.loaitin.sua",
+                [
+                    "loai_tin" => $loai_tin,
+                    "list_the_loai" => $list_the_loai
+                ]
+            );
         } else {
             return redirect("admin.loaitin.danhsach");
         }
-
     }
 
     public function makeUpdate(Request $req, $id)
@@ -43,6 +48,7 @@ class LoaiTinController extends Controller
 
         $loai_tin->Ten = $req->ten_loai_tin;
         $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
+        $loai_tin->idTheLoai = $req->id_the_loai;
         $loai_tin->save();
         return redirect("admin/loaitin/sua/" . $id)->with("thongbao", "Cập nhật thành công");
     }
@@ -70,8 +76,6 @@ class LoaiTinController extends Controller
         $loai_tin->Ten = $req->ten_loai_tin;
         $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
         $loai_tin->idTheLoai = $req->id_the_loai;
-        echo $req->id_the_loai;
-        die();
         $loai_tin->save();
         return redirect("admin/loaitin/them/")->with("thong_bao", "Thêm thành công");
     }
