@@ -22,28 +22,38 @@ Route::get('/', function () {
 Route::group(["prefix" => "admin"], function () {
     Route::group(["prefix" => "theloai"], function () {
         Route::get("danhsach", "TheLoaiController@get");
-        Route::get("sua", "TheLoaiController@update");
+        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
+        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
+        Route::get("them", "TheLoaiController@showAddPage");
+        Route::post("them", "TheLoaiController@makeAdd");
+        Route::get("xoa/{id}", "TheLoaiController@makeDelete");
+    });
+    Route::group(["prefix" => "loaitin"], function () {
+        Route::get("danhsach", "TheLoaiController@get");
+        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
+        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
         Route::get("them", "TheLoaiController@showAddPage");
         Route::post("them", "TheLoaiController@makeAdd");
     });
-    Route::group(["prefix" => "loaitin"], function () {
-        Route::get("danhsach", "LoaiTinController@get");
-        Route::get("sua", "LoaiTinController@update");
-        Route::get("them", "LoaiTinController@add");
-    });
     Route::group(["prefix" => "user"], function () {
-        Route::get("danhsach", "UserController@get");
-        Route::get("sua", "UserController@update");
-        Route::get("them", "UserController@add");
+        Route::get("danhsach", "TheLoaiController@get");
+        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
+        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
+        Route::get("them", "TheLoaiController@showAddPage");
+        Route::post("them", "TheLoaiController@makeAdd");
     });
     Route::group(["prefix" => "tintuc"], function () {
-        Route::get("danhsach", "TinTucController@get");
-        Route::get("sua", "TinTucController@update");
-        Route::get("them", "TinTucController@add");
+        Route::get("danhsach", "TheLoaiController@get");
+        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
+        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
+        Route::get("them", "TheLoaiController@showAddPage");
+        Route::post("them", "TheLoaiController@makeAdd");
     });
     Route::group(["prefix" => "slide"], function () {
-        Route::get("danhsach", "SlideController@get");
-        Route::get("sua", "SlideController@update");
-        Route::get("them", "SlideController@add");
+        Route::get("danhsach", "TheLoaiController@get");
+        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
+        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
+        Route::get("them", "TheLoaiController@showAddPage");
+        Route::post("them", "TheLoaiController@makeAdd");
     });
 });

@@ -14,14 +14,15 @@
                     {{-- Kiểm tra list validation --}}
                     @if(count($errors) > 0)
                         <div class="alert alert-danger">
-                            @foreach($errors->all as $item)
+                            @foreach($errors->all() as $item)
                                 {{$item}}<br>
                             @endforeach
                         </div>
                     @endif
 
                     @if(session("thong_bao"))
-                        <div class="alert alert-success">
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                             {{session("thong_bao")}}
                         </div>
                     @endif
@@ -30,9 +31,10 @@
                         <div class="form-group">
                             <label>Tên Thể Loại</label>
                             <input class="form-control" name="ten_the_loai"
-                                   placeholder="Vui lòng nhập tên thể loại..."/>
+                                   placeholder="Vui lòng nhập tên thể loại..."
+                            />
                         </div>
-                        <button type="submit" class="btn btn-default">Thêm Thể Loại</button>
+                        <button type="submit" class="btn btn-default">Xác Nhận</button>
                         <button type="reset" class="btn btn-default">Nhập Lại</button>
                         <form>
                 </div>

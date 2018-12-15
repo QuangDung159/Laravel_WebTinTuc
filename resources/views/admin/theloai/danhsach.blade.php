@@ -4,6 +4,12 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
+                @if(session("thongbao"))
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{session("thongbao")}}
+                    </div>
+                @endif
                 <div class="col-lg-12">
                     <h1 class="page-header">Thể loại
                         <small>Danh sách</small>
@@ -21,16 +27,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{--<tr class="odd gradeX" align="center">--}}
-                    {{--<td>1</td>--}}
-                    {{--<td>Tin Tức</td>--}}
-                    {{--<td>None</td>--}}
-                    {{--<td>Hiện</td>--}}
-                    {{--<td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>--}}
-                    {{--<td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>--}}
-                    {{--</tr>--}}
-
-
                     @foreach($list_the_loai as $item)
                         <tr class="even gradeC" align="center">
                             <td>{{$item->id}}</td>
