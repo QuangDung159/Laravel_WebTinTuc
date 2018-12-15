@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\LOAITIN;
+use App\THELOAI;
+
+class LoaiTinController extends Controller
+{
+    //
+    public function get()
+    {
+        $loai_tin = LOAITIN::all();
+        return view("admin.loaitin.danhsach", ["list_loai_tin" => $loai_tin]);
+    }
+
+    public function showUpdatePage($id)
+    {
+        if ($id != null || $id != "") {
+            $loai_tin = LOAITIN::find($id);
+            return view("admin.loaitin.sua", ["loai_tin" => $loai_tin]);
+        } else {
+            return redirect("admin.loaitin.danhsach");
+        }
+
+    }
+
+    public function makeUpdate(Request $req, $id)
+    {
+        $loai_tin = LOAITIN::find($id);
+        $this->validate($req,
+            [
+                "ten_loai_tin" => "required|unique:LoaiTin,Ten|min:3|max:100"
+            ],
+            [
+                "ten_loai_tin.required" => "Bạn chưa nhập tên thể loại",
+                "ten_loai_tin.unique" => "Tên thề loại đã tồn tại",
+                "ten_loai_tin.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
+                "ten_loai_tin.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự"
+            ]
+        );
+
+        $loai_tin->Ten = $req->ten_loai_tin;
+        $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
+        $loai_tin->save();
+        return redirect("admin/loaitin/sua/" . $id)->with("thongbao", "Cập nhật thành công");
+    }
+
+    public function showAddPage()
+    {
+        $list_the_loai = THELOAI::all();
+        return view("admin.loaitin.them", ["list_the_loai" => $list_the_loai]);
+    }
+
+    public function makeAdd(Request $req)
+    {
+        $this->validate($req,
+            [
+                "ten_loai_tin" => "required|min:3|max:100|unique:LoaiTin,Ten",
+            ],
+            [
+                "ten_loai_tin.required" => "Bạn chưa nhập tên thể loại",
+                "ten_loai_tin.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
+                "ten_loai_tin.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
+                "ten_loai_tin.unique" => "Tên thể loại đã tồn tại"
+            ]
+        );
+        $loai_tin = new LOAITIN();
+        $loai_tin->Ten = $req->ten_loai_tin;
+        $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
+        $loai_tin->idTheLoai = $req->id_the_loai;
+        echo $req->id_the_loai;
+        die();
+        $loai_tin->save();
+        return redirect("admin/loaitin/them/")->with("thong_bao", "Thêm thành công");
+    }
+
+    public function makeDelete($id)
+    {
+        $loai_tin = LOAITIN::find("$id");
+        $loai_tin->delete();
+        return redirect("admin/loaitin/danhsach")->with("thongbao", "Xóa thành công");
+    }
+}
