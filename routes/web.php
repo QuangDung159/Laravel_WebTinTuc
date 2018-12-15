@@ -11,6 +11,18 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
+use App\THELOAI;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("thu", function () {
+    $the_loai = THELOAI::find(1);
+    foreach ($the_loai->loaitin as $item_loaitin) {
+        echo $item_loaitin->Ten . "</br>";
+    }
+});
+
