@@ -19,10 +19,30 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("thu", function () {
-    $the_loai = THELOAI::find(1);
-    foreach ($the_loai->loaitin as $item_loaitin) {
-        echo $item_loaitin->Ten . "</br>";
-    }
+Route::group(["prefix" => "admin"], function () {
+    Route::group(["prefix" => "theloai"], function () {
+        Route::get("danhsach", "TheLoaiController@get");
+        Route::get("sua", "TheLoaiController@update");
+        Route::get("them", "TheLoaiController@add");
+    });
+    Route::group(["prefix" => "loaitin"], function () {
+        Route::get("danhsach", "LoaiTinController@get");
+        Route::get("sua", "LoaiTinController@update");
+        Route::get("them", "LoaiTinController@add");
+    });
+    Route::group(["prefix" => "user"], function () {
+        Route::get("danhsach", "UserController@get");
+        Route::get("sua", "UserController@update");
+        Route::get("them", "UserController@add");
+    });
+    Route::group(["prefix" => "tintuc"], function () {
+        Route::get("danhsach", "TinTucController@get");
+        Route::get("sua", "TinTucController@update");
+        Route::get("them", "TinTucController@add");
+    });
+    Route::group(["prefix" => "slide"], function () {
+        Route::get("danhsach", "SlideController@get");
+        Route::get("sua", "SlideController@update");
+        Route::get("them", "SlideController@add");
+    });
 });
-
