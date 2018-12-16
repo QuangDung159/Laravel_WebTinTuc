@@ -85,7 +85,7 @@
                         </div>
                         <button type="submit" class="btn btn-default">Xác Nhận</button>
                         <button type="reset" class="btn btn-default">Nhập Lại</button>
-                        <form>
+                    </form>
                 </div>
             </div>
             <!-- /.row -->

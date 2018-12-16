@@ -18,4 +18,10 @@ class AjaxController extends Controller
             echo '<option value="' . $item->id . '">' . $item->Ten . '</option>';
         }
     }
+
+//    public function getAnhHienThi($anh_hien_thi)
+//    {
+//        echo '<img id="anh" src="' . $anh_hien_thi . '" width="100px"
+//                                     height="100px">';
+//    }
 }

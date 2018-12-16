@@ -62,6 +62,7 @@ Route::group(["prefix" => "admin"], function () {
     });
     Route::group(["prefix" => "ajax"], function () {
         Route::get("loaitin/{id_the_loai}", "AjaxController@getLoaiTin");
+        //Route::post("tintuc/hinh/", "AjaxController@getAnhHienThi");
     });
 });
 
