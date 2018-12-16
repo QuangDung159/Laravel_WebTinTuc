@@ -83,6 +83,11 @@ class LoaiTinController extends Controller
     public function makeDelete($id)
     {
         $loai_tin = LOAITIN::find("$id");
+        $list_tin_tuc = $loai_tin->tinTuc;
+        if (count($list_tin_tuc) > 0) {
+            return redirect("admin/loaitin/danhsach")
+                ->with("khongthanhcong", "Xóa không thành công. Loại tin còn liên kết với tin tức");
+        }
         $loai_tin->delete();
         return redirect("admin/loaitin/danhsach")->with("thongbao", "Xóa thành công");
     }

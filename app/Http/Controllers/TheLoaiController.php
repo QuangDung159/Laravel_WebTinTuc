@@ -74,6 +74,11 @@ class TheLoaiController extends Controller
     public function makeDelete($id)
     {
         $the_loai = THELOAI::find("$id");
+        $list_loai_tin = $the_loai->loaitin;
+        if (count($list_loai_tin) > 0) {
+            return redirect("admin/theloai/danhsach")
+                ->with("khongthanhcong", "Xóa không thành công. Thể loại còn liên kết với loại tin");
+        }
         $the_loai->delete();
         return redirect("admin/theloai/danhsach")->with("thongbao", "Xóa thành công");
     }

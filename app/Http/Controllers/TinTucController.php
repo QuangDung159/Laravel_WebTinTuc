@@ -13,7 +13,7 @@ class TinTucController extends Controller
     //
     public function get()
     {
-        $tin_tuc = tintuc::orderBy("id", "DESC")->get();
+        $tin_tuc = TINTUC::orderBy("id", "DESC")->get();
         return view("admin.tintuc.danhsach", ["list_tin_tuc" => $tin_tuc]);
     }
 
@@ -97,8 +97,21 @@ class TinTucController extends Controller
         $tin_tuc->idLoaiTin = $req->id_loai_tin;
         $tin_tuc->TomTat = $req->tom_tat;
         $tin_tuc->NoiDung = $req->noi_dung;
-        if (isset($req->anh_hien_thi)) {
+        if ($req->hasFile("anh_hien_thi")) {
             $tin_tuc->Hinh = $req->anh_hien_thi;
+            $file = $req->file("anh_hien_thi");
+            $extension = $file->getClientOriginalExtension();
+            if ($extension != "jpg" && $extension != "png" && $extension != "jpeg") {
+                return redirect("admin/tintuc/them")
+                    ->with("saidinhdang", "Sai định dạng, định dạng đúng : jpg, jpeg, png");
+            }
+            $file_name = $file->getClientOriginalName();
+            $hinh = str_random(10) . "_" . $file_name;
+            while (file_exists("upload/tintuc/" . $hinh)) {
+                $hinh = str_random("10" . "_" . $file_name);
+            }
+            $file->move("upload/tintuc", $hinh);
+            $tin_tuc->Hinh = $hinh;
         } else {
             $tin_tuc->Hinh = "no-image-available.png";
         }

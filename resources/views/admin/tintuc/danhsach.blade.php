@@ -3,9 +3,23 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
+                <div name="notification" style="margin-top: 1vh">
+                    @if(session("khongthanhcong"))
+                        <div class="alert alert-danger alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session("khongthanhcong")}}
+                        </div>
+                    @endif
+                    @if(session("thongbao"))
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session("thongbao")}}
+                        </div>
+                    @endif
+                </div>
                 <div class="col-lg-12">
-                    <h1 class="page-header">Category
-                        <small>List</small>
+                    <h1 class="page-header">Tin Tức
+                        <small>Danh Sách</small>
                     </h1>
                 </div>
                 <!-- /.col-lg-12 -->

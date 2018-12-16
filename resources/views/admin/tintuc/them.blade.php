@@ -11,6 +11,20 @@
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-7" style="padding-bottom:120px">
+                    @if(count($errors) > 0)
+                        <div class="alert alert-danger">
+                            @foreach($errors->all() as $item)
+                                {{$item}}<br>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if(session("thongbao"))
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session("thongbao")}}
+                        </div>
+                    @endif
                     <form action="admin/tintuc/them" method="POST" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="form-group">
@@ -48,6 +62,11 @@
                                     class="form-control ckeditor">
                             </textarea>
                         </div>
+                        @if(session("saidinhdang"))
+                            <div class="alert alert-danger">
+                                {{session("saidinhdang")}}
+                            </div>
+                        @endif
                         <div class="form-group">
                             {{-- thêm thuộc tính enctype="multipart/form-data" ở <form> --}}
                             <label>Ảnh Hiển Thị</label>
@@ -64,7 +83,7 @@
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default">xác Nhận</button>
+                        <button type="submit" class="btn btn-default">Xác Nhận</button>
                         <button type="reset" class="btn btn-default">Nhập Lại</button>
                         <form>
                 </div>
