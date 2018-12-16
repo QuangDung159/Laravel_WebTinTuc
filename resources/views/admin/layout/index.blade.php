@@ -22,10 +22,12 @@
     <link href="admin_asset/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- DataTables CSS -->
-    <link href="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css"
+          rel="stylesheet">
 
     <!-- DataTables Responsive CSS -->
     <link href="admin_asset/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -63,6 +65,8 @@
         });
     });
 </script>
+<script type="text/javascript" language="javascript" src="admin_asset/ckeditor/ckeditor.js"></script>
+
 @yield("script")
 </body>
 

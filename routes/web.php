@@ -60,4 +60,8 @@ Route::group(["prefix" => "admin"], function () {
         Route::post("them", "TheLoaiController@makeAdd");
         Route::get("xoa/{id}", "TheLoaiController@makeDelete");
     });
+    Route::group(["prefix" => "ajax"], function () {
+        Route::get("loaitin/{id_the_loai}", "AjaxController@getLoaiTin");
+    });
 });
+
