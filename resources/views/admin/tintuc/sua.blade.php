@@ -114,6 +114,41 @@
                         <button type="submit" class="btn btn-default">Xác Nhận</button>
                         <button type="reset" class="btn btn-default">Nhập Lại</button>
                     </form>
+
+                    <div name="notification" style="margin-top: 1vh">
+                        @if(session("thongbao_comment"))
+                            <div class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{session("thongbao_comment")}}
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Bình Luận
+                            <small>Danh Sách</small>
+                        </h1>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                        <tr align="center">
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Nội Dung</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($tin_tuc->comment as $item)
+                            <tr class="odd gradeX" align="center">
+                                <td>{{$item->id}}</td>
+                                <td>{{$item->idUser}}</td>
+                                <td>{{$item->NoiDung}}</td>
+                                <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a
+                                            href="admin/tintuc/xoa/{{$item->idTinTuc}}/{{$item->id}}"> Delete</a></td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <!-- /.row -->
@@ -121,7 +156,6 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
-    <div id="disp_tmp_path"></div>
 @endsection
 
 @section("script")

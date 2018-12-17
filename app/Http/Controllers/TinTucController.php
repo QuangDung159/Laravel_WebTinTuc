@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\LOAITIN;
 use App\TINTUC;
 use App\THELOAI;
+use App\COMMENT;
 
 class TinTucController extends Controller
 {
@@ -159,5 +160,12 @@ class TinTucController extends Controller
         $tin_tuc = TINTUC::find("$id");
         $tin_tuc->delete();
         return redirect("admin/tintuc/danhsach")->with("thongbao", "Xóa thành công");
+    }
+
+    public function deleteComment($idTinTuc, $idComment)
+    {
+        $comment = COMMENT::find($idComment);
+        $comment->delete();
+        return redirect("admin/tintuc/sua/" . $idTinTuc)->with("thongbao_comment", "Xóa thành công");
     }
 }

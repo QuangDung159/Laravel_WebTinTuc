@@ -40,6 +40,7 @@ Route::group(["prefix" => "admin"], function () {
         Route::get("danhsach", "TinTucController@get");
         Route::get("sua/{id}", "TinTucController@showUpdatePage");
         Route::post("sua/{id}", "TinTucController@makeUpdate");
+        Route::get("xoa/{idTinTuc}/{idComment}", "TinTucController@deleteComment");
         Route::get("them", "TinTucController@showAddPage");
         Route::post("them", "TinTucController@makeAdd");
         Route::get("xoa/{id}", "TinTucController@makeDelete");
@@ -53,12 +54,12 @@ Route::group(["prefix" => "admin"], function () {
         Route::get("xoa/{id}", "TheLoaiController@makeDelete");
     });
     Route::group(["prefix" => "slide"], function () {
-        Route::get("danhsach", "TheLoaiController@get");
-        Route::get("sua/{id}", "TheLoaiController@showUpdatePage");
-        Route::post("sua/{id}", "TheLoaiController@makeUpdate");
-        Route::get("them", "TheLoaiController@showAddPage");
-        Route::post("them", "TheLoaiController@makeAdd");
-        Route::get("xoa/{id}", "TheLoaiController@makeDelete");
+        Route::get("danhsach", "SlideController@get");
+        Route::get("sua/{id}", "SlideController@showUpdatePage");
+        Route::post("sua/{id}", "SlideController@makeUpdate");
+        Route::get("them", "SlideController@showAddPage");
+        Route::post("them", "SlideController@makeAdd");
+        Route::get("xoa/{id}", "SlideController@makeDelete");
     });
     Route::group(["prefix" => "ajax"], function () {
         Route::get("loaitin/{id_the_loai}", "AjaxController@getLoaiTin");
