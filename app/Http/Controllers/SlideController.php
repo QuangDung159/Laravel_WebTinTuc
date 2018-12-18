@@ -16,40 +16,64 @@ class SlideController extends Controller
 
     public function showUpdatePage($id)
     {
-        $list_the_loai = THELOAI::all();
         if ($id != null || $id != "") {
-            $loai_tin = LOAITIN::find($id);
-            return view("admin.loaitin.sua",
+            $slide = SLIDE::find($id);
+            return view("admin.slide.sua",
                 [
-                    "loai_tin" => $loai_tin,
-                    "list_the_loai" => $list_the_loai
+                    "slide" => $slide
                 ]
             );
         } else {
-            return redirect("admin.loaitin.danhsach");
+            return redirect("admin.slide.danhsach");
         }
     }
 
     public function makeUpdate(Request $req, $id)
     {
-        $loai_tin = LOAITIN::find($id);
+        $slide = SLIDE::find($id);
         $this->validate($req,
             [
-                "ten_loai_tin" => "required|unique:LoaiTin,Ten|min:3|max:100"
+                "ten_hinh" => "required|min:3|max:100",
+                "noi_dung" => "required|min:3|max:255",
+                "link" => "required|min:3|max:255"
             ],
             [
-                "ten_loai_tin.required" => "Bạn chưa nhập tên thể loại",
-                "ten_loai_tin.unique" => "Tên thề loại đã tồn tại",
-                "ten_loai_tin.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_loai_tin.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự"
+                "ten_hinh.required" => "Bạn chưa nhập tên hình",
+                "ten_hinh.min" => "Tên hình chỉ từ 3 đến 100 kí tự",
+                "ten_hinh.max" => "Tên hình chỉ từ 3 đến 100 kí tự",
+
+                "noi_dung.required" => "Bạn chưa nhập nội dung",
+                "noi_dung.min" => "Nội dung phải chứa từ 3 đến 255 kí tự",
+                "noi_dung.max" => "Nội dung phải chứa từ 3 đến 255 kí tự",
+
+                "link.required" => "Bạn chưa nhập link",
+                "link.max" => "Link phải chứa từ 3 đến 255 kí tự",
+                "link.min" => "Link phải chứa từ 3 đến 255 kí tự"
             ]
         );
 
-        $loai_tin->Ten = $req->ten_loai_tin;
-        $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
-        $loai_tin->idTheLoai = $req->id_the_loai;
-        $loai_tin->save();
-        return redirect("admin/loaitin/sua/" . $id)->with("thongbao", "Cập nhật thành công");
+        $slide->Ten = $req->ten_hinh;
+        $slide->NoiDung = $req->noi_dung;
+        $slide->link = $req->link;
+
+        if ($req->hasFile("hinh")) {
+            $file = $req->file("hinh");
+            $fileExt = $file->getClientOriginalExtension();
+            if ($fileExt != "jpeg" and $fileExt != "jpg" and $fileExt != "png") {
+                return redirect("admin/slide/sua/" . $id)->with("saidinhdang", "Chỉ nhận định dạng jpeg, png, jpg");
+            } else {
+                $fileName = $file->getClientOriginalName();
+                $fileNameToSave = str_random(10) . $fileName;
+                while (file_exists("upload/slide/" . $fileNameToSave)) {
+                    $fileNameToSave = str_random(10) . $fileName;
+                }
+                unlink("upload/slide/" . $slide->Hinh);
+                $file->move("upload/slide", $fileNameToSave);
+                $slide->Hinh = $fileNameToSave;
+            }
+        }
+        $slide->save();
+        return redirect("admin/slide/sua/" . $id)->with("thongbao", "Sửa thành công");
     }
 
     public function showAddPage()
@@ -61,32 +85,56 @@ class SlideController extends Controller
     {
         $this->validate($req,
             [
-                "ten_loai_tin" => "required|min:3|max:100|unique:LoaiTin,Ten",
+                "ten_hinh" => "required|min:3|max:100|unique:Slide,Ten",
+                "noi_dung" => "required|min:3|max:255",
+                "link" => "required|min:3|max:255"
             ],
             [
-                "ten_loai_tin.required" => "Bạn chưa nhập tên thể loại",
-                "ten_loai_tin.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_loai_tin.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_loai_tin.unique" => "Tên thể loại đã tồn tại"
+                "ten_hinh.required" => "Bạn chưa nhập tên hình",
+                "ten_hinh.min" => "Tên hình chỉ từ 3 đến 100 kí tự",
+                "ten_hinh.max" => "Tên hình chỉ từ 3 đến 100 kí tự",
+                "ten_hinh.unique" => "Tên hình đã tồn tại",
+
+                "noi_dung.required" => "Bạn chưa nhập nội dung",
+                "noi_dung.min" => "Nội dung phải chứa từ 3 đến 255 kí tự",
+                "noi_dung.max" => "Nội dung phải chứa từ 3 đến 255 kí tự",
+
+                "link.required" => "Bạn chưa nhập link",
+                "link.max" => "Link phải chứa từ 3 đến 255 kí tự",
+                "link.min" => "Link phải chứa từ 3 đến 255 kí tự"
             ]
         );
-        $loai_tin = new LOAITIN();
-        $loai_tin->Ten = $req->ten_loai_tin;
-        $loai_tin->TenKhongDau = changeTitle($req->ten_loai_tin);
-        $loai_tin->idTheLoai = $req->id_the_loai;
-        $loai_tin->save();
-        return redirect("admin/loaitin/them/")->with("thong_bao", "Thêm thành công");
+        $slide = new SLIDE();
+        $slide->Ten = $req->ten_hinh;
+        $slide->NoiDung = $req->noi_dung;
+        $slide->link = $req->link;
+
+        if ($req->hasFile("hinh")) {
+            $file = $req->file("hinh");
+            $fileExt = $file->getClientOriginalExtension();
+            if ($fileExt != "jpeg" and $fileExt != "jpg" and $fileExt != "png") {
+                return redirect("admin/slide/them")->with("saidinhdang", "Chỉ nhận định dạng jpeg, png, jpg");
+            } else {
+                $fileName = $file->getClientOriginalName();
+                $fileNameToSave = str_random(10) . $fileName;
+                while (file_exists("upload/slide/" . $fileNameToSave)) {
+                    $fileNameToSave = str_random(10) . $fileName;
+                }
+                $file->move("upload/slide", $fileNameToSave);
+                $slide->Hinh = $fileNameToSave;
+            }
+        } else {
+            $slide->Hinh = "related_post_no_available_image.png";
+        }
+        $slide->save();
+        return redirect("admin/slide/them/")->with("thongbao", "Thêm thành công");
     }
 
     public function makeDelete($id)
     {
-        $loai_tin = LOAITIN::find("$id");
-        $list_tin_tuc = $loai_tin->tinTuc;
-        if (count($list_tin_tuc) > 0) {
-            return redirect("admin/loaitin/danhsach")
-                ->with("khongthanhcong", "Xóa không thành công. Loại tin còn liên kết với tin tức");
-        }
-        $loai_tin->delete();
-        return redirect("admin/loaitin/danhsach")->with("thongbao", "Xóa thành công");
+        $slide = SLIDE::find("$id");
+        $slide->delete();
+        unlink("upload/slide/" . $slide->Hinh);
+        return redirect("admin/slide/danhsach")->with("thongbao", "Xóa thành công");
     }
 }

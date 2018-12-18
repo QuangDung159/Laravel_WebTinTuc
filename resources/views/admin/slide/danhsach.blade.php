@@ -4,12 +4,6 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Slide
-                        <small>Danh Sách</small>
-                    </h1>
-                </div>
-                <!-- /.col-lg-12 -->
                 <div name="notification" style="margin-top: 1vh">
                     @if(session("thongbao"))
                         <div class="alert alert-success alert-dismissible">
@@ -18,6 +12,12 @@
                         </div>
                     @endif
                 </div>
+                <div class="col-lg-12">
+                    <h1 class="page-header">Slide
+                        <small>Danh Sách</small>
+                    </h1>
+                </div>
+                <!-- /.col-lg-12 -->
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                     <tr align="center">
@@ -41,8 +41,10 @@
                                      width="800px">
                             </td>
                             <td>{{$item->link}}</td>
-                            <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="#"> Delete</a></td>
-                            <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="#">Edit</a></td>
+                            <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a
+                                        href="admin/slide/xoa/{{$item->id}}"> Delete</a></td>
+                            <td class="center"><i class="fa fa-pencil fa-fw"></i> <a
+                                        href="admin/slide/sua/{{$item->id}}">Edit</a></td>
                         </tr>
                     @endforeach
                     </tbody>

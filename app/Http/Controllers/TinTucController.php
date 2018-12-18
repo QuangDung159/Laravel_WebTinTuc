@@ -134,7 +134,6 @@ class TinTucController extends Controller
         $tin_tuc->TomTat = $req->tom_tat;
         $tin_tuc->NoiDung = $req->noi_dung;
         if ($req->hasFile("anh_hien_thi")) {
-            $tin_tuc->Hinh = $req->anh_hien_thi;
             $file = $req->file("anh_hien_thi");
             $extension = $file->getClientOriginalExtension();
             if ($extension != "jpg" && $extension != "png" && $extension != "jpeg") {
@@ -159,6 +158,7 @@ class TinTucController extends Controller
     {
         $tin_tuc = TINTUC::find("$id");
         $tin_tuc->delete();
+        unlink("upload/tintuc/" . $tin_tuc->Hinh);
         return redirect("admin/tintuc/danhsach")->with("thongbao", "Xóa thành công");
     }
 

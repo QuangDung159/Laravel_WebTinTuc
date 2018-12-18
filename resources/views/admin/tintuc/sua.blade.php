@@ -85,12 +85,12 @@
                         <div class="form-group">
                             {{-- thêm thuộc tính enctype="multipart/form-data" ở <form> --}}
                             <label>Ảnh Hiển Thị</label>
-                            <div id="anh">
-                                <img src="upload/tintuc/{{$tin_tuc->Hinh}}" width="100px"
+                            <div>
+                                <img id="anh" src="upload/tintuc/{{$tin_tuc->Hinh}}" width="100px"
                                      height="100px">
                             </div>
-                            <input name="anh_hien_thi id=" anh_hien_thi""
-                            type="file" class="form-control">
+                            <input name="anh_hien_thi" id="anh_hien_thi"
+                                   type="file" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Nổi Bật</label>
@@ -156,6 +156,10 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
+    {{--<form id="form1" runat="server">--}}
+        {{--<input type='file' id="imgInp"/>--}}
+        {{--<img id="blah" src="#" alt="your image"/>--}}
+    {{--</form>--}}
 @endsection
 
 @section("script")
@@ -171,14 +175,19 @@
             });
         });
 
-        // $(document).ready(function () {
-        //     $("input[type='file']").change(function (e) {
-        //         var anh_hien_thi = e.target.files[0].mozFullPath;
-        //         alert(anh_hien_thi);
-        //         $.post("admin/ajax/tintuc/hinh/" + anh_hien_thi, function (data) {
-        //             $("#anh").html(data);
-        //         });
-        //     });
-        // });
+        // Script xem ảnh trước khi upload
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#anh').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#anh_hien_thi").change(function () {
+            readURL(this);
+        });
     </script>
 @endsection

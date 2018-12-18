@@ -38,11 +38,6 @@
                                    placeholder="Vui lòng nhập nội dung..."/>
                         </div>
                         <div class="form-group">
-                            <label>Tiêu Đề</label>
-                            <input class="form-control" name="tieu_de_tin_tuc"
-                                   placeholder="Vui lòng nhập tiêu đề tin tức..."/>
-                        </div>
-                        <div class="form-group">
                             <label>Link</label>
                             <input class="form-control" name="link"
                                    placeholder="Vui lòng nhập link..."/>
