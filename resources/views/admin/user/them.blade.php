@@ -11,7 +11,24 @@
                 </div>
                 <!-- /.col-lg-12 -->
                 <div class="col-lg-7" style="padding-bottom:120px">
-                    <form action="" method="POST">
+                    <div class="notification" style="margin-top: 1vh">
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                @foreach($errors->all() as $item)
+                                    {{$item}}<br>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if(session("thongbao"))
+                            <div class="alert alert-success alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{session("thongbao")}}
+                            </div>
+                        @endif
+                    </div>
+                    <form action="admin/user/them" method="POST">
+                        {{csrf_field()}}
                         <div class="form-group">
                             <label>Tên</label>
                             <input class="form-control" name="ten"

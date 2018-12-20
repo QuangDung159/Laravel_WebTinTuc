@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
+
 use App\USER;
 
 class UserController extends Controller
@@ -17,33 +19,45 @@ class UserController extends Controller
     public function showUpdatePage($id)
     {
         if ($id != null || $id != "") {
-            $the_loai = THELOAI::find($id);
-            return view("admin.theloai.sua", ["the_loai" => $the_loai]);
+            $user = USER::find($id);
+            return view("admin.user.sua", ["user" => $user]);
         } else {
-            return redirect("admin.theloai.danhsach");
+            return redirect("admin.user.danhsach");
         }
 
     }
 
     public function makeUpdate(Request $req, $id)
     {
-        $the_loai = THELOAI::find($id);
+        $user = USER::find($id);
         $this->validate($req,
             [
-                "ten_the_loai" => "required|unique:TheLoai,Ten|min:3|max:100"
+                "ten" => "required|min:3|max:100",
+                "current_password" => "required",
+                "new_password" => "required",
+                "re_password" => "required|same:new_password"
             ],
             [
-                "ten_the_loai.required" => "Bạn chưa nhập tên thể loại",
-                "ten_the_loai.unique" => "Tên thề loại đã tồn tại",
-                "ten_the_loai.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_the_loai.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự"
+                "ten.required" => "Bạn chưa nhập tên",
+                "ten.min" => "Tên chỉ từ 3 đến 100 kí tự",
+                "ten.max" => "Tên chỉ từ 3 đến 100 kí tự",
+                "ten.unique" => "Tên thể loại đã tồn tại",
+
+                "current_password.required" => "Bạn chưa nhập password",
+                "new_password.required" => "Bạn chưa nhập password mới",
+                "re_password.required" => "Bạn chưa nhập xác nhận password"
             ]
         );
-
-        $the_loai->Ten = $req->ten_the_loai;
-        $the_loai->TenKhongDau = changeTitle($req->ten_the_loai);
-        $the_loai->save();
-        return redirect("admin/theloai/sua/" . $id)->with("thongbao", "Cập nhật thành công");
+        $user->name = $req->ten;
+        $user->email = $req->email;
+        $user->quyen = $req->quyen;
+        if ($req->current_password == Crypt::decrypt($user->password)) {
+            $user->password = Crypt::encrypt($req->new_password);
+        } else {
+            return redirect("admin/user/sua/" . $id)->with("error_saimatkhau", "Mật khẩu hiện tại không đúng");
+        }
+        $user->save();
+        return redirect("admin/user/sua/" . $id)->with("thongbao", "Sửa thành công");
     }
 
     public function showAddPage()
@@ -55,31 +69,41 @@ class UserController extends Controller
     {
         $this->validate($req,
             [
-                "ten_the_loai" => "required|min:3|max:100|unique:TheLoai,Ten",
+                "ten" => "required|min:3|max:100",
+                "email" => "required|unique:Users,email",
+                "password" => "required",
+                "re_password" => "required|same:password"
             ],
             [
-                "ten_the_loai.required" => "Bạn chưa nhập tên thể loại",
-                "ten_the_loai.min" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_the_loai.max" => "Tên thể loại chỉ từ 3 đến 100 kí tự",
-                "ten_the_loai.unique" => "Tên thể loại đã tồn tại"
+                "ten.required" => "Bạn chưa nhập tên",
+                "ten.min" => "Tên chỉ từ 3 đến 100 kí tự",
+                "ten.max" => "Tên chỉ từ 3 đến 100 kí tự",
+                "ten.unique" => "Tên thể loại đã tồn tại",
+
+                "email.required" => "Bạn chưa nhập email",
+                "email.unique" => "Email đã tồn tại",
+
+                "password.required" => "Bạn chưa nhập password",
+                "re_password.required" => "Bạn chưa nhập re-password"
             ]
         );
-        $the_loai = new THELOAI();
-        $the_loai->Ten = $req->ten_the_loai;
-        $the_loai->TenKhongDau = changeTitle($req->ten_the_loai);
-        $the_loai->save();
-        return redirect("admin/theloai/them/")->with("thong_bao", "Thêm thành công");
+        $user = new USER();
+        $user->name = $req->ten;
+        $user->email = $req->email;
+        $user->quyen = $req->quyen;
+        $user->password = Crypt::encrypt($req->password);
+        $user->save();
+        return redirect("admin/user/them/")->with("thongbao", "Thêm thành công");
     }
 
     public function makeDelete($id)
     {
-        $the_loai = THELOAI::find("$id");
-        $list_loai_tin = $the_loai->loaitin;
-        if (count($list_loai_tin) > 0) {
-            return redirect("admin/theloai/danhsach")
-                ->with("khongthanhcong", "Xóa không thành công. Thể loại còn liên kết với loại tin");
+        $user = USER::find("$id");
+        $list_comment = $user->comment;
+        foreach ($list_comment as $item) {
+            $item->delete();
         }
-        $the_loai->delete();
+        $user->delete();
         return redirect("admin/theloai/danhsach")->with("thongbao", "Xóa thành công");
     }
 }
