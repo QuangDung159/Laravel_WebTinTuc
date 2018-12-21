@@ -4,6 +4,14 @@
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
+                <div class="notification" style="margin-top: 1vh">
+                    @if(session("thongbao"))
+                        <div class="alert alert-success alert-dismissible">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{session("thongbao")}}
+                        </div>
+                    @endif
+                </div>
                 <div class="col-lg-12">
                     <h1 class="page-header">User
                         <small>Danh Sách</small>

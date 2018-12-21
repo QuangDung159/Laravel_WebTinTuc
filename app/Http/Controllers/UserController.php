@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\USER;
 
@@ -49,10 +50,9 @@ class UserController extends Controller
             ]
         );
         $user->name = $req->ten;
-        $user->email = $req->email;
         $user->quyen = $req->quyen;
-        if ($req->current_password == Crypt::decrypt($user->password)) {
-            $user->password = Crypt::encrypt($req->new_password);
+        if (Hash::check($req->current_password, $user->password)) {
+            $user->password = bcrypt($req->new_password);
         } else {
             return redirect("admin/user/sua/" . $id)->with("error_saimatkhau", "Mật khẩu hiện tại không đúng");
         }
@@ -91,7 +91,7 @@ class UserController extends Controller
         $user->name = $req->ten;
         $user->email = $req->email;
         $user->quyen = $req->quyen;
-        $user->password = Crypt::encrypt($req->password);
+        $user->password = bcrypt($req->password);
         $user->save();
         return redirect("admin/user/them/")->with("thongbao", "Thêm thành công");
     }
@@ -104,6 +104,32 @@ class UserController extends Controller
             $item->delete();
         }
         $user->delete();
-        return redirect("admin/theloai/danhsach")->with("thongbao", "Xóa thành công");
+        return redirect("admin/user/danhsach")->with("thongbao", "Xóa thành công");
+    }
+
+    public function showDangNhapAdmin()
+    {
+        return view("admin.login");
+    }
+
+    public function makeDangNhapAdmin(Request $req)
+    {
+        $this->validate($req,
+            [
+                "email" => "required",
+                "password" => "required",
+            ],
+            [
+                "email.required" => "Bạn chưa nhập email",
+
+                "password.required" => "Bạn chưa nhập password"
+            ]
+        );
+        if (Auth::attempt(["email" => $req->email, "password" => $req->password])) {
+            return redirect("admin/theloai/danhsach");
+        } else {
+            return redirect("admin/dangnhap")->with("error_saithongtindangnhap", "Đăng nhập không thành công");
+        }
+
     }
 }

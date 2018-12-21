@@ -8,18 +8,19 @@
     <meta name="author" content="">
 
     <title>Admin - Khoa Phạm</title>
+    <base href="{{asset("")}}">
 
     <!-- Bootstrap Core CSS -->
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <link href="admin_asset/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="admin_asset/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="admin_asset/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -33,16 +34,36 @@
                     <h3 class="panel-title">Please Sign In</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form" action="" method="POST">
+                    <div class="notification">
+                        @if(count($errors) > 0)
+                            <div class="alert alert-danger">
+                                @foreach($errors->all() as $item)
+                                    {{$item}}<br>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(session("error_saithongtindangnhap"))
+                            <div class="alert alert-danger alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{session("error_saithongtindangnhap")}}
+                            </div>
+                        @endif
+                    </div>
+                    <form role="form" action="admin/dangnhap" method="POST">
+                        {{csrf_field()}}
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                <input class="form-control" placeholder="E-mail"
+                                       name="email" type="email" autofocus>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Password" name="password" type="password"
+                                <input class="form-control" placeholder="Password"
+                                       name="password" type="password"
                                        value="">
                             </div>
-                            <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                            <button type="submit"
+                                    class="btn btn-lg btn-success btn-block">Login
+                            </button>
                         </fieldset>
                     </form>
                 </div>
@@ -52,16 +73,16 @@
 </div>
 
 <!-- jQuery -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="admin_asset/bower_components/jquery/dist/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="admin_asset/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 <!-- Metis Menu Plugin JavaScript -->
-<script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="admin_asset/bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="dist/js/sb-admin-2.js"></script>
+<script src="admin_asset/dist/js/sb-admin-2.js"></script>
 
 </body>
 

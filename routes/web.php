@@ -67,3 +67,12 @@ Route::group(["prefix" => "admin"], function () {
     });
 });
 
+Route::get("admin/dangnhap", "UserController@showDangNhapAdmin");
+Route::post("admin/dangnhap", "UserController@makeDangNhapAdmin");
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
