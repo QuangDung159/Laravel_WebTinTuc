@@ -78,6 +78,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get("admin/logout", "UserController@makeLogout");
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get("trangchu", function () {
+    return view("client.pages.trangchu");
+});
