@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\COMMENT;
 use App\LOAITIN;
 use App\SLIDE;
 use App\TINTUC;
@@ -43,6 +44,18 @@ class PageController extends Controller
             [
                 "list_tin_tuc" => $list_tin_tuc,
                 "loai_tin" => $loai_tin
+            ]
+        );
+    }
+
+    public function showTinTucChiTiet($id)
+    {
+        $tin_tuc = TINTUC::find($id);
+        $list_comment = COMMENT::where("idTinTuc", $id);
+        return view("client.pages.tintuc",
+            [
+                "tin_tuc" => $tin_tuc,
+                "list_comment" => $list_comment
             ]
         );
     }
