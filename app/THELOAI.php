@@ -24,8 +24,8 @@ class THELOAI extends Model
         return $this->hasManyThrough(
             "App\TINTUC",
             "App\LOAITIN",
-            "idLoaiTin",
             "idTheLoai",
+            "idLoaiTin",
             "id");
     }
 }
