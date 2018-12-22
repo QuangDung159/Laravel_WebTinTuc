@@ -82,6 +82,5 @@ Route::get("admin/logout", "UserController@makeLogout");
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get("trangchu", function () {
-    return view("client.pages.trangchu");
-});
+Route::get("trangchu", "PageController@showTrangChu");
+Route::get("lienhe", "PageController@showLienHe");
