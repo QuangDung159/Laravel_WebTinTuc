@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\USER;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -130,6 +131,11 @@ class UserController extends Controller
         } else {
             return redirect("admin/dangnhap")->with("error_saithongtindangnhap", "Đăng nhập không thành công");
         }
+    }
 
+    public function makeLogout()
+    {
+        Auth::logout();
+        return redirect("admin/dangnhap");
     }
 }
