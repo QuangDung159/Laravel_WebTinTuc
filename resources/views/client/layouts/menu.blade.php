@@ -12,7 +12,7 @@
                 <ul>
                     @foreach($the_loai->loaitin as $loai_tin)
                         <li class="list-group-item">
-                            <a href="#">{{$loai_tin->Ten}}</a>
+                            <a href="loaitin/{{$loai_tin->id}}/{{$loai_tin->TenKhongDau}}.html">{{$loai_tin->Ten}}</a>
                         </li>
                     @endforeach
                 </ul>

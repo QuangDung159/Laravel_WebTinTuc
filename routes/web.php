@@ -84,4 +84,4 @@ Route::get("admin/logout", "UserController@makeLogout");
 
 Route::get("trangchu", "PageController@showTrangChu");
 Route::get("lienhe", "PageController@showLienHe");
-Route::get("loaitin/{id}", "PageController@showTinTucByLoaiTin");
+Route::get("loaitin/{id}/{ten_khong_dau}.html", "PageController@showTinTucByLoaiTin");

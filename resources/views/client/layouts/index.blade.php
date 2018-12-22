@@ -35,7 +35,18 @@
 @include("client.layouts.header")
 
 <!-- Page Content -->
-@yield("content")
+<div class="container">
+    <!-- slider -->
+@include("client.layouts.slide")
+<!-- end slide -->
+    <div class="space20"></div>
+    <div class="row main-left">
+        @include("client.layouts.menu")
+        <div class="col-md-9">
+            @yield("content")
+        </div>
+    </div>
+</div>
 <!-- end Page Content -->
 
 <!-- Footer -->
