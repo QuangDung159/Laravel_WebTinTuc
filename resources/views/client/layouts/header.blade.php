@@ -22,9 +22,11 @@
                 </li>
             </ul>
 
-            <form class="navbar-form navbar-left" role="search">
+            <form class="navbar-form navbar-left" role="search"
+                  method="get" action="timkiem">
+                {{csrf_field()}}
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" name="tu_khoa" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
@@ -32,7 +34,7 @@
             <ul class="nav navbar-nav pull-right">
                 @if(!isset($current_user))
                     <li>
-                        <a href="#">Đăng ký</a>
+                        <a href="dangki">Đăng ký</a>
                     </li>
                     <li>
                         <a href="dangnhap">Đăng nhập</a>

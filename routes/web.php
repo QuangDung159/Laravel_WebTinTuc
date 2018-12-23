@@ -93,3 +93,6 @@ Route::get("dangxuat", "PageController@makeLogout");
 Route::post("postcomment/{idTinTuc}/{idUser}", "PageController@postComment");
 Route::get("user", "PageController@showUserPage");
 Route::post("user/{idUser}", "PageController@makeUpdateUser");
+Route::get("dangki", "PageController@showDangKiPage");
+Route::post("dangki", "PageController@makeDangKi");
+Route::get("timkiem", "PageController@makeSearch");

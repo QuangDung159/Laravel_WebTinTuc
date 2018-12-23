@@ -1,8 +1,14 @@
 @extends("client.layouts.index")
 @section("content")
+    <?php
+    function doiMau($str, $tukhoa)
+    {
+        return str_replace($tukhoa, "<span style='color:red'>$tukhoa</span>", $str);
+    }
+    ?>
     <div class="panel panel-default">
         <div class="panel-heading" style="background-color:#337AB7; color:white;">
-            <h4><b>{{$loai_tin->Ten}}</b></h4>
+            <h4><b>Từ khóa : {{$tu_khoa}}</b></h4>
         </div>
         @foreach($list_tin_tuc as $tintuc)
             <div class="row-item row">
@@ -15,8 +21,8 @@
                     </a>
                 </div>
                 <div class="col-md-9">
-                    <h3>{{$tintuc->TieuDe}}</h3>
-                    <p>{{$tintuc->TomTat}}</p>
+                    <h3>{!! doiMau($tintuc->TieuDe, $tu_khoa) !!}</h3>
+                    <p>{!! doiMau($tintuc->TomTat, $tu_khoa) !!}</p>
                     <a class="btn btn-primary" href="tintuc/{{$tintuc->id}}/{{$tintuc->TieuDeKhongDau}}.html">Chi tiết
                         <span
                                 class="glyphicon glyphicon-chevron-right"></span></a>
@@ -26,7 +32,8 @@
         @endforeach
         {{-- Pagination --}}
         <div class="text-center">
-            {{$list_tin_tuc->links()}}
+            {{-- {{$tintuc->links()}} --}}
+            {{ $list_tin_tuc->appends(Request::all())->links() }}
         </div>
     </div>
 @endsection

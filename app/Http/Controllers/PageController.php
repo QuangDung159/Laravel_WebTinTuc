@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\THELOAI;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 
 class PageController extends Controller
 {
@@ -168,5 +169,64 @@ class PageController extends Controller
         }
         $user->save();
         return redirect("user")->with("thongbao", "Sửa thành công");
+    }
+
+    public function showDangKiPage()
+    {
+        return view("client.pages.dangki");
+    }
+
+    public function makeDangKi(Request $req)
+    {
+        $this->validate($req,
+            [
+                "ten" => "required|min:3|max:100",
+                "email" => "required|max:100|min:3|unique:Users,email",
+                "password" => "required",
+                "re_password" => "required|same:password"
+            ],
+            [
+                "ten.required" => "Bạn chưa nhập tên người dùng",
+                "ten.min" => "Tên người dùng chỉ từ 3 đến 100 kí tự",
+                "ten.max" => "Tên người dùng chỉ từ 3 đến 100 kí tự",
+
+                "email.required" => "Bạn chưa nhập email",
+                "email.min" => "Email chỉ từ 3 đến 100 kí tự",
+                "email.max" => "Email chỉ từ 3 đến 100 kí tự",
+                "email.unique" => "Email đã tồn tại",
+
+                "password.required" => "Bạn chưa nhập password",
+                "re_password.required" => "Bạn chưa nhập xác nhận password",
+                "re_password.same" => "Mật khẩu không khớp"
+            ]
+        );
+
+        $user = new USER();
+        $user->email = $req->email;
+        $user->name = $req->ten;
+        $user->password = bcrypt($req->password);
+        $user->quyen = 0;
+        $user->save();
+        return redirect("dangnhap");
+    }
+
+    public function showTimKiemPage()
+    {
+        return view("client.pages.timkiem");
+    }
+
+    public function makeSearch(Request $request)
+    {
+        $tu_khoa = $request->tu_khoa;
+        $list_tin_tuc = TINTUC::where('TieuDe', 'like', '%' . $tu_khoa . '%')
+            ->orWhere('TomTat', 'like', '%' . $tu_khoa . '%')
+            ->orWhere('NoiDung', 'like', '%' . $tu_khoa . '%')
+            ->paginate(5);
+        return view('client.pages.timkiem',
+            [
+                'tu_khoa' => $tu_khoa,
+                'list_tin_tuc' => $list_tin_tuc
+            ]
+        );
     }
 }
