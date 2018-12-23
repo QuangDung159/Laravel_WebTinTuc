@@ -11,11 +11,11 @@
                 @if(count($the_loai->loaitin))
                     <div class="row-item row">
                         <h3>
-                            <a href="category.html">{{$the_loai->Ten}}</a> |
+                            {{$the_loai->Ten}} |
                             @foreach($the_loai->loaitin as $loai_tin)
                                 <small>
                                     <a href="loaitin/{{$loai_tin->id}}/{{$loai_tin->TenKhongDau}}.html"><i>{{$loai_tin->Ten}}</i></a>
-                                    /
+                                    |
                                 </small>
                             @endforeach
                         </h3>
@@ -30,23 +30,24 @@
                         ?>
                         <div class="col-md-8 border-right">
                             <div class="col-md-5">
-                                <a href="detail.html">
+                                <a href="tintuc/{{$tin1->id}}/{{$tin1->TieuDeKhongDau}}.html">
                                     <img class="img-responsive" src="upload/tintuc/{{$tin1->Hinh}}"
                                          alt="">
                                 </a>
                             </div>
                             <div class="col-md-7">
-                                <h3>{{$tin1->TieuDe}}</h3>
-                                <p>{{$tin1->TomTat}}</p>
-                                <a class="btn btn-primary" href="detail.html">Chi tiết <span
-                                            class="glyphicon glyphicon-chevron-right"></span></a>
+                                <h3>{!!$tin1->TieuDe!!}</h3>
+                                <p>{!!$tin1->TomTat!!}</p>
+                                <a class="btn btn-primary" href="tintuc/{{$tin1->id}}/{{$tin1->TieuDeKhongDau}}.html">
+                                    Chi tiết
+                                    <span class="glyphicon glyphicon-chevron-right"></span></a>
                             </div>
                         </div>
 
 
                         <div class="col-md-4">
                             @foreach($data as $item)
-                                <a href="detail.html">
+                                <a href="tintuc/{{$item->id}}/{{$item->TieuDeKhongDau}}.html">
                                     <h4>
                                         <span class="glyphicon glyphicon-list-alt"></span>
                                         {{$item->TieuDe}}
@@ -54,7 +55,6 @@
                                 </a>
                             @endforeach
                         </div>
-
                         <div class="break"></div>
                     </div>
                 @endif

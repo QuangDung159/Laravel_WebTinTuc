@@ -86,3 +86,10 @@ Route::get("trangchu", "PageController@showTrangChu");
 Route::get("lienhe", "PageController@showLienHe");
 Route::get("loaitin/{id}/{ten_khong_dau}.html", "PageController@showTinTucByLoaiTin");
 Route::get("tintuc/{id}/{tieu_de_khong_dau}.html", "PageController@showTinTucChiTiet");
+
+Route::get("dangnhap", "PageController@showDangNhap");
+Route::post("dangnhap", "PageController@makeDangNhap");
+Route::get("dangxuat", "PageController@makeLogout");
+Route::post("postcomment/{idTinTuc}/{idUser}", "PageController@postComment");
+Route::get("user", "PageController@showUserPage");
+Route::post("user/{idUser}", "PageController@makeUpdateUser");

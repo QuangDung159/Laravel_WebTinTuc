@@ -30,27 +30,26 @@
             </form>
 
             <ul class="nav navbar-nav pull-right">
-                <li>
-                    <a href="#">Đăng ký</a>
-                </li>
-                <li>
-                    <a href="#">Đăng nhập</a>
-                </li>
-                <li>
-                    <a>
-                        <span class="glyphicon glyphicon-user"></span>
-                        Bùi Đức Phú
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">Đăng xuất</a>
-                </li>
-
+                @if(!isset($current_user))
+                    <li>
+                        <a href="#">Đăng ký</a>
+                    </li>
+                    <li>
+                        <a href="dangnhap">Đăng nhập</a>
+                    </li>
+                @else
+                    <li>
+                        <a href="user">
+                            <span class="glyphicon glyphicon-user"></span>
+                            {{$current_user->name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="dangxuat">Đăng xuất</a>
+                    </li>
+                @endif
             </ul>
         </div>
-
-
         <!-- /.navbar-collapse -->
     </div>
     <!-- /.container -->

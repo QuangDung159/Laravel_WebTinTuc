@@ -17,7 +17,8 @@
                 <div class="col-md-9">
                     <h3>{{$tintuc->TieuDe}}</h3>
                     <p>{{$tintuc->TomTat}}</p>
-                    <a class="btn btn-primary" href="detail.html">Chi tiết <span
+                    <a class="btn btn-primary" href="tintuc/{{$tintuc->id}}/{{$tintuc->TieuDeKhongDau}}.html">Chi tiết
+                        <span
                                 class="glyphicon glyphicon-chevron-right"></span></a>
                 </div>
                 <div class="break"></div>
